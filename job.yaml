@@ -1,0 +1,15 @@
+type: command
+command: "all_reduce_perf -e 8G -f 2 -g 1"
+environment: azureml:nccltest_wrapper:1
+environment_variables:
+  NCCL_DEBUG: "INFO" # Helps debug setup issues
+  NCCL_IB_PCI_RELAXED_ORDERING: "1" # Relaxed Ordering can greatly help the performance of Infiniband networks in virtualized environments.
+compute: azureml:kube-compute
+distribution:
+  type: mpi
+  process_count_per_instance: 8 # NOTE: set equal to number of gpus on the node
+resources:
+  instance_count: 2
+experiment_name: nccl-test
+display_name: nccl-test-instance
+description: Runs https://github.com/NVIDIA/nccl-tests

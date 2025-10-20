@@ -1,0 +1,22 @@
+# we do a custom install of nfd as masterpool contains unsupported mellanox hardware
+# an install from network-operator will cause it to get tagged with 15b3 and then
+# fail in mofed installation.
+master:
+  nodeSelector:
+    kubernetes.azure.com/agentpool: masterpool
+  config:
+    extraLabelNs:
+      - "nvidia.com"
+gc:
+  nodeSelector:
+    kubernetes.azure.com/agentpool: masterpool
+
+worker:
+  nodeSelector:
+    kubernetes.azure.com/agentpool: workerpool
+  config:
+    sources:
+      pci:
+        deviceClassWhitelist: ["02","03"]
+        deviceLabelFields: [vendor]
+

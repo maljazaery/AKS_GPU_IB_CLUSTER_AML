@@ -1,0 +1,15 @@
+nfd:
+  enabled: false
+
+driver:
+  enabled: true
+  usePrecompiled: true
+  # add only the driver version component, kernel and OS will be figured by nvidia
+  # https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/25.3.4/getting-started.html#common-chart-customization-options
+  version: 570
+  rdma:
+    enabled: true
+    useHostMofed: true
+
+toolkit:
+  enabled: true

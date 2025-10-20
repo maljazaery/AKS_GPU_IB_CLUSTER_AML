@@ -1,0 +1,16 @@
+apiVersion: amlarc.azureml.com/v1alpha1
+kind: InstanceType
+metadata:
+  name: defaultinstancetype
+spec:
+  nodeSelector:
+    agentpool: workerpool
+  resources:
+    limits:
+      cpu: "88"
+      nvidia.com/gpu: 8
+      nvidia.com/mlnxnics: 8
+      memory: "1800Gi"
+    requests:
+      cpu: "86"
+      memory: "1700Gi"

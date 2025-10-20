@@ -1,0 +1,73 @@
+apiVersion: mellanox.com/v1alpha1
+kind: NicClusterPolicy
+metadata:
+  name: nic-cluster-policy
+spec:
+  ofedDriver:
+    # https://docs.nvidia.com/networking/display/kubernetes24100/platform-support.html
+    # The number kubernetes24100 in above url can be obtained by inspecting version of network operator
+    repository: nvcr.io/nvidia/mellanox
+    image: doca-driver
+    version: 24.10-0.7.0.0-0
+    forcePrecompiled: false
+    upgradePolicy:
+      # set auto upgrade false for version pinning
+      autoUpgrade: false
+      drain:
+        deleteEmptyDir: true
+        enable: true
+        force: true
+        timeoutSeconds: 300
+      maxParallelUpgrades: 1
+    startupProbe:
+      initialDelaySeconds: 10
+      periodSeconds: 20
+    livenessProbe:
+      initialDelaySeconds: 30
+      periodSeconds: 30
+    readinessProbe:
+      initialDelaySeconds: 10
+      periodSeconds: 30
+
+  sriovDevicePlugin:
+    repository: ghcr.io/k8snetworkplumbingwg
+    image: sriov-network-device-plugin
+    version: v3.8.0
+    config: |
+      {
+        "resourceList": [
+          {
+            "resourcePrefix": "nvidia.com",
+            "resourceName": "mlnxnics",
+            "selectors": {
+              "vendors": ["15b3"],
+              "linkTypes": ["infiniband"],
+              "isRdma": true
+            }
+          }
+        ]
+      }
+
+  secondaryNetwork:
+     cniPlugins:
+      repository: ghcr.io/k8snetworkplumbingwg
+      image: plugins
+      version: v1.5.0
+     multus:
+      repository: ghcr.io/k8snetworkplumbingwg
+      image: multus-cni
+      version: v4.1.0
+     ipamPlugin:
+      repository: ghcr.io/k8snetworkplumbingwg
+      image: whereabouts
+      version: v0.7.0
+     ipoib:
+      repository: ghcr.io/mellanox
+      image: ipoib-cni
+      version: v1.2.0
+
+  nvIpam:
+    repository: ghcr.io/mellanox
+    image: nvidia-k8s-ipam
+    version: v0.2.0
+    enableWebhook: false
