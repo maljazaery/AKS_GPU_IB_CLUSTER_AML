@@ -1,4 +1,4 @@
-# AML as Orchestrator for your AKS GPU Infiniband Clutser
+# AML as Orchestrator for an AKS GPU Infiniband Cluster
 
 This tutorial will take you through creating an AML (Azure Machine Learning) compute backed by an AKS (Azure Kubernetes Service) cluster and running a distributed AML job on it with Infiniband support.
 
