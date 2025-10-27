@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dcgm-exporter-monitor
+  namespace: azureml
+  labels:
+    release: aml-k8s-extension # prometheus uses this label to discover the servicemonitors pertaining to it,
+                               # match it to name passed to az k8s-extension create --name {this_argument}
+spec:
+  selector:
+    matchLabels:
+      app: nvidia-dcgm-exporter
+  namespaceSelector:
+    matchNames:
+    - gpu-ns # namespace of the gpu-operator helm chart
+  endpoints:
+  - port: "gpu-metrics" # check the default dcgm service exposed by nvidia, the port alias should match
+    path: "/metrics"
