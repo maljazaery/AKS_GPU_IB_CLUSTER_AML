@@ -17,6 +17,7 @@ Here is a diagram showing the high level setup architecture:
    - Deploy and configure the AKS cluster with Infiniband
    - Install required Kubernetes and AzureML components
    - Attach the cluster to AzureML and validate Infiniband performance
+   - Install monitoring service(DCGM exporter with Prometheus). This will make GPU metrics available in Azure ML UI.
    - Submit AML Job for NCCL test.
 
 ## Reference
