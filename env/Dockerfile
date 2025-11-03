@@ -1,7 +1,7 @@
 # Adding NCCL tests on top of nvidia/pytorch container
 FROM nvcr.io/nvidia/pytorch:24.03-py3
 
-ENV NCCL_TESTS_TAG=v2.11.0
+ENV NCCL_TESTS_TAG=v2.16.4
 
 # 90 is the gencode for H100
 RUN mkdir /tmp/nccltests \
