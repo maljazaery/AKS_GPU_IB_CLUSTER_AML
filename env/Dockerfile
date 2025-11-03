@@ -1,5 +1,5 @@
 # Adding NCCL tests on top of nvidia/pytorch container
-FROM nvcr.io/nvidia/pytorch:24.03-py3
+FROM nvcr.io/nvidia/pytorch:25.03-py3
 
 ENV NCCL_TESTS_TAG=v2.16.4
 
